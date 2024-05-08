@@ -4,6 +4,17 @@ const tours = JSON.parse(
     fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
   );
 
+// Create a middleware to check request body 
+// if request body does not have name and price property it will be going to error
+  exports.checkBody=(req, res, next)=>{
+    if (!req.body.name || !req.body.price){
+      return res.status(400).json({
+        status: `fail`,
+        message:"Missing name or price"
+      })
+    }
+    next();
+  }
 exports.getAllTours = (req, res) => {
     res.status(200).json({
       status: "success",
